@@ -1,35 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import ReactPlayer from 'react-player';
+import movieTrailer from 'movie-trailer';
 
 function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+
+    const [video, setVideo] = useState("inception");
+    const [videoURL, setVideoURL] = useState("https://youtu.be/sa9l-dTv9Gk");
+
+    
+    function handleSearch() {
+        movieTrailer(video).then((res) => {
+            setVideoURL(res);
+        });
+    }
+
+    return (
+        <div className="flex flex-col justify-center items-center h-screen w-full text-lg text-center">
+            <div className="mb-6">
+                <label className="block mb-2">
+                    Search for any movies/shows:
+                </label>
+                <input
+                    type="text"
+                    onChange={(e) => { setVideo(e.target.value); }}
+                    className="p-2 border border-gray-400 rounded-lg w-full max-w-md"
+                    placeholder="Type a movie/show"
+                />
+                <button
+                    onClick={handleSearch}
+                    className="mt-4 bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-500"
+                >
+                    Search
+                </button>
+            </div>
+
+            
+            <ReactPlayer url={videoURL} controls={true} />
+        </div>
+    );
 }
 
-export default App
+export default App;
