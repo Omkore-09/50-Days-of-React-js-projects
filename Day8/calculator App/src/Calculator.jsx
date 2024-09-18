@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Calculator = () => {
+const Calculator = () => {  
   const [input, setInput] = useState('');
 
   const handleClick = (value) => {
